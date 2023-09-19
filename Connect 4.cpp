@@ -20,7 +20,7 @@ int main()
 
     int xAmount = 0;
     int oAmount = 0;
-    int row = 0;
+    int row = 0;             
     int column = 0;
     bool winner = false;
 
@@ -28,10 +28,11 @@ int main()
     {
         for (int b = 0; b < 7; b++)
         {
-            cout << board[a][b] << " | ";
+            cout << " | " << board[a][b];
         }
         cout << endl;
     }
+    cout << "   1   2   3   4   5   6   7\n";
 
     while (winner != true)
     {
@@ -52,6 +53,8 @@ int main()
 
         }
 
+        system("cls");
+
         for (int a = 0; a < 6; a++)
         {
             for (int b = 0; b < 7; b++)
@@ -67,6 +70,7 @@ int main()
             }
             cout << endl;
         }
+        cout << "   1   2   3   4   5   6   7\n";
 
         checkWin(board);
 
@@ -87,6 +91,8 @@ int main()
 
         }
 
+        system("cls");
+
         for (int a = 0; a < 6; a++)
         {
             for (int b = 0; b < 7; b++)
@@ -103,6 +109,8 @@ int main()
             cout << endl;
         }
 
+        cout << "   1   2   3   4   5   6   7\n";
+
          checkWin(board);
 
     }
@@ -116,10 +124,13 @@ void checkWin(char board[6][7])
     int oAmountH = 0;
     int xAmountV = 0;
     int oAmountV = 0;
-    int xAmountD = 0;
-    int oAmountD = 0;
+    int xAmountDL = 0;
+    int oAmountDL = 0;
+    int xAmountDR = 0;
+    int oAmountDR = 0;
 
-    for (int checkV = 0; checkV <= 5; checkV++)
+
+for (int checkV = 0; checkV <= 5; checkV++)
     {
         if (xAmountH >= 4 || oAmountH >= 4)
         {
@@ -227,5 +238,69 @@ void checkWin(char board[6][7])
 
         }
     }
+
+    bool running = true;
+    int loopTimes = 0;
+    int startingRow = 5;
+    int startingCol = 3;
+    int increment = 4;
+
+    while (running)
+    {
+
+        loopTimes += 1;
+
+        if (loopTimes < 3)
+        {
+
+            increment += 1;
+
+        }
+        else if (loopTimes >= 3 && loopTimes <= 4)
+        {
+
+            increment = 6;
+
+        }
+        else if (loopTimes < 6)
+        {
+
+            increment -= 1;
+
+        }
+        else
+        {
+
+            running = false;
+
+        }
+
+        if (board[startingRow][startingCol] == 'X' || board[startingRow][startingCol] == 'O')
+        {
+
+            if (board[startingRow][startingCol] == 'X')
+            {
+
+                xAmountDL += 1;
+
+            }
+
+            else
+            {
+
+                oAmountDL += 1;
+
+            }
+
+            for (int i = 0; i >= increment; i++)
+            {
+
+
+
+            }
+        }
+
+    }
+
 }
 
