@@ -2,27 +2,87 @@
 #include <iostream>
 #include <string>
 
-void checkWin(char board[6][7]);
+bool checkWin(char board[6][7]);
+void printBoard(char board[6][7]);
 
 using namespace std;
 int main()
 {
+        char board[6][7] =
+        {
+            {'_','_','_','_','_','_','_'},
+            {'_','_','_','_','_','_','_'},
+            {'_','_','_','_','_','_','_'},
+            {'_','_','_','_','_','_','_'},
+            {'_','_','_','_','_','_','_'},
+            {'_','_','_','_','_','_','_'},
+        };
 
-    char board[6][7] =
-    {
-        {'_','_','_','_','_','_','_'},
-        {'_','_','_','_','_','_','_'},
-        {'_','_','_','_','_','_','_'},
-        {'_','_','_','_','_','_','_'},
-        {'_','_','_','_','_','_','_'},
-        {'_','_','_','_','_','_','_'},
-    };
+        int xAmount = 0;
+        int oAmount = 0;
+        int row = 0;
+        int column = 0;
+        bool winner = false;
 
-    int xAmount = 0;
-    int oAmount = 0;
-    int row = 0;             
-    int column = 0;
-    bool winner = false;
+        printBoard(board);
+
+        while (winner != true)
+        {
+            cout << "Enter the column: ";
+            cin >> column;
+
+            column -= 1;
+
+            for (int row = 5; row >= 0; row--)
+            {
+                if (board[row][column] != 'X' && board[row][column] != 'O')
+                {
+
+                    board[row][column] = 'O';
+
+                    row = -1;
+                }
+
+            }
+
+            system("cls");
+
+            printBoard(board);
+
+            winner = checkWin(board);
+            if (winner != true)
+            {
+
+                cout << "Enter the column: ";
+                cin >> column;
+
+                column -= 1;
+
+                for (int row = 5; row >= 0; row--)
+                {
+                    if (board[row][column] != 'X' && board[row][column] != 'O')
+                    {
+
+                        board[row][column] = 'X';
+
+                        row = -1;
+                    }
+
+                }
+
+                system("cls");
+
+                printBoard(board);
+
+                winner = checkWin(board);
+
+            }
+
+        }
+}
+
+void printBoard(char board[6][7])
+{
 
     for (int a = 0; a < 6; a++)
     {
@@ -34,90 +94,9 @@ int main()
     }
     cout << "   1   2   3   4   5   6   7\n";
 
-    while (winner != true)
-    {
-        cout << "Enter the column: ";
-        cin >> column;
-
-        column -= 1;
-
-        for (int row = 5; row >= 0; row--)
-        {
-            if (board[row][column] != 'X' && board[row][column] != 'O')
-            {
-
-                board[row][column] = 'O';
-
-                row = -1;
-            }
-
-        }
-
-        system("cls");
-
-        for (int a = 0; a < 6; a++)
-        {
-            for (int b = 0; b < 7; b++)
-            {
-                if (a == row && b == column)
-                {
-                    cout << " |" << board[a][b];
-                }
-                else
-                {
-                    cout << " | " << board[a][b];
-                }
-            }
-            cout << endl;
-        }
-        cout << "   1   2   3   4   5   6   7\n";
-
-        checkWin(board);
-
-        cout << "Enter the column: ";
-        cin >> column;
-
-        column -= 1;
-
-        for (int row = 5; row >= 0; row--)
-        {
-            if (board[row][column] != 'X' && board[row][column] != 'O')
-            {
-
-                board[row][column] = 'X';
-
-                row = -1;
-            }
-
-        }
-
-        system("cls");
-
-        for (int a = 0; a < 6; a++)
-        {
-            for (int b = 0; b < 7; b++)
-            {
-                if (a == row && b == column)
-                {
-                    cout << " |" << board[a][b];
-                }
-                else
-                {
-                    cout << " | " << board[a][b];
-                }
-            }
-            cout << endl;
-        }
-
-        cout << "   1   2   3   4   5   6   7\n";
-
-         checkWin(board);
-
-    }
 }
 
-
-void checkWin(char board[6][7])
+bool checkWin(char board[6][7])
 {
 
     int xAmountH = 0;
@@ -130,7 +109,7 @@ void checkWin(char board[6][7])
     int oAmountDR = 0;
 
 
-for (int checkV = 0; checkV <= 5; checkV++)
+for (int checkV = 0; checkV <= 6; checkV++)
     {
         if (xAmountH >= 4 || oAmountH >= 4)
         {
@@ -142,12 +121,16 @@ for (int checkV = 0; checkV <= 5; checkV++)
 
                 cout << "X Won!!!!\n";
 
+                return(true);
+
             }
 
             if (oAmountH >= 4)
             {
 
                 cout << "O Won!!!!\n";
+
+                return(true);
 
             }
 
@@ -158,7 +141,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
             xAmountH = 0;
             oAmountH = 0;
 
-            for (int checkH = 0; checkH <= 6; checkH++)
+            for (int checkH = 0; checkH <= 7; checkH++)
             {
 
                 if (board[checkV][checkH] == 'X')
@@ -184,7 +167,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
 
     }
 
-    for (int checkH = 0; checkH <= 6; checkH++)
+    for (int checkH = 0; checkH <= 7; checkH++)
     {
 
         if (xAmountV >= 4 || oAmountV >= 4)
@@ -196,6 +179,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
             {
 
                 cout << "X Won!!!!\n";
+                return(true);
 
             }
 
@@ -203,6 +187,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
             {
 
                 cout << "O Won!!!!\n";
+                return(true);
 
             }
 
@@ -214,7 +199,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
             xAmountV = 0;
             oAmountV = 0;
 
-            for (int checkV = 0; checkV <= 5; checkV++)
+            for (int checkV = 0; checkV <= 6; checkV++)
             {
 
                 if (board[checkV][checkH] == 'X')
@@ -242,7 +227,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
     bool running = true;
     int loopTimes = 0;
     int startingRow = 5;
-    int startingCol = 3;
+    int startingCol = 2;
     int increment = 4;
 
     while (running)
@@ -254,6 +239,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
         {
 
             increment += 1;
+            startingCol += 1;
 
         }
         else if (loopTimes >= 3 && loopTimes <= 4)
@@ -266,6 +252,7 @@ for (int checkV = 0; checkV <= 5; checkV++)
         {
 
             increment -= 1;
+            startingRow -= 1;
 
         }
         else
@@ -275,32 +262,145 @@ for (int checkV = 0; checkV <= 5; checkV++)
 
         }
 
-        if (board[startingRow][startingCol] == 'X' || board[startingRow][startingCol] == 'O')
+        xAmountDL = 0;
+        oAmountDL = 0;
+            for (int i = 0; i <= increment; i++)
+            {
+
+                if (board[startingRow - i][startingCol - i] == 'X' || board[startingRow - i][startingCol - i] == 'O')
+                {
+
+                    if (board[startingRow - i][startingCol - i] == 'X')
+                    {
+
+                        xAmountDL += 1;
+                        oAmountDL = 0;
+
+                    }
+
+                    else
+                    {
+
+                        oAmountDL += 1;
+                        xAmountDL = 0;
+
+                    }
+                }
+                
+                if (xAmountDL == 4 || oAmountDL == 4)
+                {
+
+                    if (xAmountDL == 4)
+                    {
+
+                        cout << "X Won!!!!\n";
+                        return(true);
+                        running = false;
+                        i = 10;
+
+                    }
+                    else
+                    {
+
+                        cout << "O Won!!!!\n";
+                        return(true);
+                        running = false;
+                        i = 10;
+
+                    }
+                }
+
+            }
+
+    }
+    running = true;
+    loopTimes = 0;
+    startingRow = 5;
+    startingCol = 2;
+    increment = 4;
+
+    while (running)
+    {
+
+        loopTimes += 1;
+
+        if (loopTimes < 3)
         {
 
-            if (board[startingRow][startingCol] == 'X')
+            increment += 1;
+            startingCol += 1;
+
+        }
+        else if (loopTimes >= 3 && loopTimes <= 4)
+        {
+
+            increment = 6;
+
+        }
+        else if (loopTimes < 6)
+        {
+
+            increment -= 1;
+            startingRow -= 1;
+
+        }
+        else
+        {
+
+            running = false;
+
+        }
+
+        xAmountDR = 0;
+        oAmountDR = 0;
+        for (int i = 0; i <= increment; i++)
+        {
+
+            if (board[startingRow - i][startingCol + i] == 'X' || board[startingRow - i][startingCol + i] == 'O')
             {
 
-                xAmountDL += 1;
+                if (board[startingRow - i][startingCol + i] == 'X')
+                {
 
+                    xAmountDR += 1;
+                    oAmountDR = 0;
+
+                }
+
+                else
+                {
+
+                    oAmountDR += 1;
+                    xAmountDR = 0;
+
+                }
             }
 
-            else
+            if (xAmountDR == 4 || oAmountDR == 4)
             {
 
-                oAmountDL += 1;
+                if (xAmountDR == 4)
+                {
 
+                    cout << "X Won!!!!\n";
+                    return(true);
+                    running = false;
+                    i = 10;
+
+                }
+                else
+                {
+
+                    cout << "O Won!!!!\n";
+                    return(true);
+                    running = false;
+                    i = 10;
+
+                }
             }
 
-            for (int i = 0; i >= increment; i++)
-            {
-
-
-
-            }
         }
 
     }
-
 }
 
