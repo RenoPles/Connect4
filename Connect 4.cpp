@@ -4,78 +4,143 @@
 
 bool checkWin(char board[6][7]);
 void printBoard(char board[6][7]);
+int aiInput(char board[6][7]);
 
 using namespace std;
 int main()
 {
-        char board[6][7] =
+    char board[6][7] =
+    {
+        {'_','_','_','_','_','_','_'},
+        {'_','_','_','_','_','_','_'},
+        {'_','_','_','_','_','_','_'},
+        {'_','_','_','_','_','_','_'},
+        {'_','_','_','_','_','_','_'},
+        {'_','_','_','_','_','_','_'},
+    };
+
+    int xAmount = 0;
+    int oAmount = 0;
+    int row = 0;
+    int column = 0;
+    bool winner = false;
+    bool noError = true;
+    bool ai = false;
+    bool correctlyEntered = false;
+    string aiQuestion = "";
+
+
+    while (correctlyEntered != true)
+    {
+        system("cls");
+
+        cout << "1.   Play against AI\n";
+        cout << "2.   Play against person\n";
+
+        cout << "Which would you like to do? ";
+        cin >> aiQuestion;
+
+        if (aiQuestion == "1")
         {
-            {'_','_','_','_','_','_','_'},
-            {'_','_','_','_','_','_','_'},
-            {'_','_','_','_','_','_','_'},
-            {'_','_','_','_','_','_','_'},
-            {'_','_','_','_','_','_','_'},
-            {'_','_','_','_','_','_','_'},
-        };
 
-        int xAmount = 0;
-        int oAmount = 0;
-        int row = 0;
-        int column = 0;
-        bool winner = false;
-        bool noError = true;
-        bool ai = false;
-        bool correctlyEntered = false;
-        string aiQuestion = "";
+            ai = true;
+            correctlyEntered = true;
 
-
-        while (correctlyEntered != true)
+        }
+        else if (aiQuestion == "2")
         {
-            system("cls");
 
-            cout << "1.   Play against AI\n";
-            cout << "2.   Play against person\n";
+            correctlyEntered = true;
 
-            cout << "Which would you like to do? ";
-            cin >> aiQuestion;
+        }
+        else
+        {
 
-            if (aiQuestion == "1")
+            cout << "Enter 1 or 2!!\n";
+
+        }
+
+    }
+
+    system("cls");
+
+    printBoard(board);
+
+    while (winner != true)
+    {
+
+        noError = true;
+
+        while (noError == true)
+        {
+            cout << "Enter the column: ";
+            cin >> column;
+
+            if (column > 7 || column < 0)
             {
 
-                ai = true;
-                correctlyEntered = true;
-
-            }
-            else if (aiQuestion == "2")
-            {
-
-                correctlyEntered = true;
+                cout << "You can only enter number #1 - #7!!\n";
 
             }
             else
             {
+                column -= 1;
 
-                cout << "Enter 1 or 2!!\n";
+                if (board[0][column] == 'O' || board[0][column] == 'X')
+                {
 
+                    cout << "The column is already full!!\n";
+
+                }
+                else
+                {
+
+                    noError = false;
+
+                    for (int row = 5; row >= 0; row--)
+                    {
+                        if (board[row][column] != 'X' && board[row][column] != 'O')
+                        {
+
+                            board[row][column] = 'O';
+
+                            row = -1;
+                        }
+
+                    }
+                }
             }
-
         }
 
         system("cls");
 
+
         printBoard(board);
 
-        while (winner != true)
+        winner = checkWin(board);
+
+        if (winner != true)
         {
+
 
             noError = true;
 
             while (noError == true)
             {
-                cout << "Enter the column: ";
-                cin >> column;
 
-                if (column > 7 || column < 0)
+                if (ai != true)
+                {
+                    cout << "Enter the column: ";
+                    cin >> column;
+                    column -= 1;
+                }
+                else
+                {
+
+                    column = aiInput(board);
+
+                }
+                if (column >= 6 || column <= -1)
                 {
 
                     cout << "You can only enter number #1 - #7!!\n";
@@ -83,7 +148,6 @@ int main()
                 }
                 else
                 {
-                    column -= 1;
 
                     if (board[0][column] == 'O' || board[0][column] == 'X')
                     {
@@ -95,89 +159,108 @@ int main()
                     {
 
                         noError = false;
-
                         for (int row = 5; row >= 0; row--)
                         {
                             if (board[row][column] != 'X' && board[row][column] != 'O')
                             {
 
-                                board[row][column] = 'O';
+
+                                board[row][column] = 'X';
 
                                 row = -1;
                             }
 
                         }
+
                     }
+
                 }
             }
-
             system("cls");
-
 
             printBoard(board);
 
             winner = checkWin(board);
-            if (winner != true)
-            {
-
-                noError = true;
-
-                while (noError == true)
-                {
-
-                    cout << "Enter the column: ";
-                    cin >> column;
-
-                    if (column > 7 || column < 0)
-                    {
-
-                        cout << "You can only enter number #1 - #7!!\n";
-
-                    }
-                    else
-                    {
-                        column -= 1;
-
-                        if (board[0][column] == 'O' || board[0][column] == 'X')
-                        {
-
-                            cout << "The column is already full!!\n";
-
-                        }
-                        else
-                        {
-
-                            noError = false;
-                            for (int row = 5; row >= 0; row--)
-                            {
-                                if (board[row][column] != 'X' && board[row][column] != 'O')
-                                {
-
-
-                                    board[row][column] = 'X';
-
-                                    row = -1;
-                                }
-
-                            }
-
-                        }
-
-                    }
-                }
-
-                system("cls");
-
-                printBoard(board);
-
-                winner = checkWin(board);
-
-            }
 
         }
+
+    }
 }
 
+int aiInput(char board[6][7])
+{
 
+    int randomNumber = 0;
+
+    int xAmount = 0;
+    int oAmount = 0;
+
+
+    for (int checkV = 5; checkV >= 0; checkV--)
+    {
+
+            xAmount = 0;
+            oAmount = 0;
+
+
+            for (int checkH = 0; checkH <= 6; checkH++)
+            {
+
+                if (board[checkV][checkH] == 'X')
+                {
+
+                    xAmount += 1;
+
+                    oAmount = 0;
+
+                }
+                else if (board[checkV][checkH] == 'O')
+                {
+
+                    oAmount += 1;
+
+                    xAmount = 0;
+
+                }
+                else if (board[checkV][checkH] == '_')
+                {
+
+                    xAmount = 0;
+                    oAmount = 0;
+
+                }
+                if (xAmount >= 3 || oAmount >= 3)
+                {
+
+                    checkV = -1;
+
+                    if (xAmount >= 3)
+                    {
+
+                        checkH += 1;
+                        return (checkH);
+
+                    }
+
+                    if (oAmount >= 3)
+                    {
+
+                        checkH += 1;
+                        return (checkH);
+
+                    }
+                    
+                    
+
+                }
+            }
+        
+
+    }
+
+    randomNumber = 0 + rand() % 7;
+
+}
 void printBoard(char board[6][7])
 {
 
