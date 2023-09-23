@@ -194,71 +194,85 @@ int aiInput(char board[6][7])
 
     int xAmount = 0;
     int oAmount = 0;
+    bool almostWin = false;
 
 
     for (int checkV = 5; checkV >= 0; checkV--)
     {
 
-            xAmount = 0;
-            oAmount = 0;
+        xAmount = 0;
+        oAmount = 0;
 
 
-            for (int checkH = 0; checkH <= 6; checkH++)
+        for (int checkH = 0; checkH <= 6; checkH++)
+        {
+
+            if (board[checkV][checkH] == 'X')
             {
 
-                if (board[checkV][checkH] == 'X')
-                {
+                xAmount += 1;
 
-                    xAmount += 1;
+                oAmount = 0;
 
-                    oAmount = 0;
-
-                }
-                else if (board[checkV][checkH] == 'O')
-                {
-
-                    oAmount += 1;
-
-                    xAmount = 0;
-
-                }
-                else if (board[checkV][checkH] == '_')
-                {
-
-                    xAmount = 0;
-                    oAmount = 0;
-
-                }
-                if (xAmount >= 3 || oAmount >= 3)
-                {
-
-                    checkV = -1;
-
-                    if (xAmount >= 3)
-                    {
-
-                        checkH += 1;
-                        return (checkH);
-
-                    }
-
-                    if (oAmount >= 3)
-                    {
-
-                        checkH += 1;
-                        return (checkH);
-
-                    }
-                    
-                    
-
-                }
             }
-        
+            else if (board[checkV][checkH] == 'O')
+            {
+
+                oAmount += 1;
+
+                xAmount = 0;
+
+            }
+            else if (board[checkV][checkH] == '_')
+            {
+
+                xAmount = 0;
+                oAmount = 0;
+
+            }
+            if (xAmount >= 3 || oAmount >= 3)
+            {
+
+                checkV = -1;
+
+                if (xAmount >= 3)
+                {
+
+                    checkH += 1;
+                    return (checkH);
+                    checkH = 7;
+                    checkV = -1;
+                    almostWin = true;
+
+                }
+
+                if (oAmount >= 3)
+                {
+
+                    checkH += 1;
+                    return (checkH);
+                    checkH = 7;
+                    checkV = -1;
+                    almostWin = true;
+
+                }
+
+
+
+            }
+        }
+
 
     }
 
-    randomNumber = 0 + rand() % 7;
+    if (almostWin != true)
+    {
+        
+
+        randomNumber = (rand() % (6 - 0 + 1)) + 0;
+        return(randomNumber);
+
+    }
 
 }
 void printBoard(char board[6][7])
@@ -289,7 +303,7 @@ bool checkWin(char board[6][7])
     int oAmountDR = 0;
 
 
-for (int checkV = 6; checkV >= 0; checkV--)
+    for (int checkV = 6; checkV >= 0; checkV--)
     {
         if (xAmountH >= 4 || oAmountH >= 4)
         {
@@ -325,7 +339,7 @@ for (int checkV = 6; checkV >= 0; checkV--)
             for (int checkH = 7; checkH >= 0; checkH--)
             {
 
-                 if (board[checkV][checkH] == 'X')
+                if (board[checkV][checkH] == 'X')
                 {
 
                     xAmountH += 1;
@@ -355,28 +369,28 @@ for (int checkV = 6; checkV >= 0; checkV--)
 
     }
 
-if (xAmountH >= 4 || oAmountH >= 4)
-{
-
-    if (xAmountH >= 4)
+    if (xAmountH >= 4 || oAmountH >= 4)
     {
 
-        cout << "X Won!!!!\n";
+        if (xAmountH >= 4)
+        {
 
-        return(true);
+            cout << "X Won!!!!\n";
+
+            return(true);
+
+        }
+
+        if (oAmountH >= 4)
+        {
+
+            cout << "O Won!!!!\n";
+
+            return(true);
+
+        }
 
     }
-
-    if (oAmountH >= 4)
-    {
-
-        cout << "O Won!!!!\n";
-
-        return(true);
-
-    }
-
-}
 
     for (int checkH = 0; checkH <= 7; checkH++)
     {
@@ -503,60 +517,60 @@ if (xAmountH >= 4 || oAmountH >= 4)
 
         xAmountDL = 0;
         oAmountDL = 0;
-            for (int i = 0; i <= increment; i++)
+        for (int i = 0; i <= increment; i++)
+        {
+
+            if (board[startingRow - i][startingCol - i] == 'X' || board[startingRow - i][startingCol - i] == 'O')
             {
 
-                if (board[startingRow - i][startingCol - i] == 'X' || board[startingRow - i][startingCol - i] == 'O')
+                if (board[startingRow - i][startingCol - i] == 'X')
                 {
 
-                    if (board[startingRow - i][startingCol - i] == 'X')
-                    {
+                    xAmountDL += 1;
+                    oAmountDL = 0;
 
-                        xAmountDL += 1;
-                        oAmountDL = 0;
-
-                    }
-
-                    else if (board[startingRow - i][startingCol - i] == 'O')
-                    {
-
-                        oAmountDL += 1;
-                        xAmountDL = 0;
-
-                    }
-                    else if (board[startingRow - i][startingCol - i] == '_')
-                    {
-
-                        oAmountDL = 0;
-                        xAmountDL = 0;
-
-                    }
                 }
-                
-                if (xAmountDL == 4 || oAmountDL == 4)
+
+                else if (board[startingRow - i][startingCol - i] == 'O')
                 {
 
-                    if (xAmountDL == 4)
-                    {
+                    oAmountDL += 1;
+                    xAmountDL = 0;
 
-                        cout << "X Won!!!!\n";
-                        return(true);
-                        running = false;
-                        i = 10;
-
-                    }
-                    else
-                    {
-
-                        cout << "O Won!!!!\n";
-                        return(true);
-                        running = false;
-                        i = 10;
-
-                    }
                 }
+                else if (board[startingRow - i][startingCol - i] == '_')
+                {
 
+                    oAmountDL = 0;
+                    xAmountDL = 0;
+
+                }
             }
+
+            if (xAmountDL == 4 || oAmountDL == 4)
+            {
+
+                if (xAmountDL == 4)
+                {
+
+                    cout << "X Won!!!!\n";
+                    return(true);
+                    running = false;
+                    i = 10;
+
+                }
+                else
+                {
+
+                    cout << "O Won!!!!\n";
+                    return(true);
+                    running = false;
+                    i = 10;
+
+                }
+            }
+
+        }
 
     }
     running = true;
@@ -581,6 +595,7 @@ if (xAmountH >= 4 || oAmountH >= 4)
         {
 
             increment = 6;
+
 
         }
         else if (loopTimes < 6)
@@ -656,4 +671,3 @@ if (xAmountH >= 4 || oAmountH >= 4)
 
     }
 }
-
