@@ -141,7 +141,7 @@ int main()
                     column = aiInput(board);
 
                 }
-                if (column >= 6 || column <= -1)
+                if (column > 7 || column < 0)
                 {
 
                     cout << "You can only enter number #1 - #7!!\n";
@@ -344,7 +344,7 @@ int aiInput(char board[6][7])
                     if (xAmount >= 3)
                     {
                         
-                        if ((checkV - 1) >= 0)
+                        if ((checkV - 1) != -1)
                         {
                             if (board[checkV - 1][checkH] != 'O' && board[checkV - 1][checkH] != 'X')
                             {
@@ -382,6 +382,141 @@ int aiInput(char board[6][7])
 
         randomNumber = (rand() % (7 - 0 + 1)) + 0;
         return(randomNumber);
+
+    }
+
+    bool running = true;
+    int loopTimes = 0;
+    int startingRow = 5;
+    int startingCol = 2;
+    int increment = 4;
+    xAmount = 0;
+    oAmount = 0;
+
+    while (running)
+    {
+
+        loopTimes += 1;
+
+        if (loopTimes < 3)
+        {
+
+            increment += 1;
+            startingCol += 1;
+
+        }
+        else if (loopTimes >= 3 && loopTimes <= 4)
+        {
+
+            increment = 6;
+
+        }
+        else if (loopTimes < 6)
+        {
+
+            increment -= 1;
+            startingRow -= 1;
+
+        }
+        else
+        {
+
+            running = false;
+
+        }
+
+        xAmount = 0;
+        oAmount = 0;
+        for (int i = 0; i <= increment; i++)
+        {
+
+            if (board[startingRow - i][startingCol - i] == 'X' || board[startingRow - i][startingCol - i] == 'O')
+            {
+
+                if (board[startingRow - i][startingCol - i] == 'X')
+                {
+
+                    xAmount += 1;
+                    oAmount = 0;
+
+                }
+
+                else if (board[startingRow - i][startingCol - i] == 'O')
+                {
+
+                    oAmount += 1;
+                    xAmount = 0;
+
+                }
+                else if (board[startingRow - i][startingCol - i] == '_')
+                {
+
+                    oAmount = 0;
+                    xAmount = 0;
+
+                }
+            }
+
+            if (xAmount == 3 || oAmount == 3)
+            {
+
+                if (((startingRow - i) - 1 != -1 || (startingCol - i) - 1 != -1) || (((startingRow - i) + 3)  != 5 || (startingCol - i) + 3 != 6))
+                {
+
+                    if ((board[(startingRow - i) - 1][(startingCol - i) - 1] != 'X' || board[(startingRow - i) - 1][(startingCol - i) - 1] != 'O') && (board[(startingRow - i) + 4][(startingCol - i) + 4]) != 'X' || board[(startingRow - i) + 4][(startingCol - i) + 4])
+                    {
+
+                        if (board[startingRow - i][(startingCol - i) - 1] != '_' || board[(startingRow - i) + 5][(startingCol - i) + 4] != '_')
+                        {
+
+                            if (xAmount == 3)
+                            {
+                                if (board[(startingRow - i) - 1][(startingCol - i) - 1] != 'X' || board[(startingRow - i) - 1][(startingCol - i) - 1] != 'O' || board[startingRow - i][(startingCol - i) - 1] != '_')
+                                {
+
+                                    startingCol += 4;
+                                    return (startingCol);
+
+                                }
+                                else
+                                {
+
+                                    if (board[(startingRow - i) + 4][(startingCol - i) + 4] != 'X' || board[(startingRow - i) + 4][(startingCol - i) + 4] != 'O' || board[(startingRow - i) + 5][(startingCol - i) + 4] != '_')
+                                    startingCol -= 1;
+                                    return (startingCol);
+
+                                }
+
+                            }
+                            else
+                            {
+
+                                if (board[(startingRow - i) - 1][(startingCol - i) - 1] != 'X' || board[(startingRow - i) - 1][(startingCol - i) - 1] != 'O' || board[startingRow - i][(startingCol - i) - 1] != '_')
+                                {
+
+                                    startingCol += 4;
+                                    return (startingCol);
+
+                                }
+                                else
+                                {
+
+                                    if (board[(startingRow - i) + 4][(startingCol - i) + 4] != 'X' || board[(startingRow - i) + 4][(startingCol - i) + 4] != 'O' || board[(startingRow - i) + 5][(startingCol - i) + 4] != '_')
+                                        startingCol -= 1;
+                                    return (startingCol);
+
+                                }
+                            }
+
+                        }                        
+
+                    }
+
+                }
+
+            }
+
+        }
 
     }
 
