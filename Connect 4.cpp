@@ -376,15 +376,6 @@ int aiInput(char board[6][7])
             }
     }
 
-    if (almostWin != true)
-    {
-
-
-        randomNumber = (rand() % (7 - 0 + 1)) + 0;
-        return(randomNumber);
-
-    }
-
     bool running = true;
     int loopTimes = 0;
     int startingRow = 5;
@@ -517,6 +508,14 @@ int aiInput(char board[6][7])
             }
 
         }
+        if (almostWin != true)
+        {
+
+
+            randomNumber = (rand() % (7 - 0 + 1)) + 0;
+            return(randomNumber);
+
+        }
 
     }
 
@@ -549,40 +548,13 @@ bool checkWin(char board[6][7])
     int oAmountDR = 0;
 
 
-    for (int checkV = 6; checkV >= 0; checkV--)
+    for (int checkV = 5; checkV >= 0; checkV--)
     {
-        if (xAmountH >= 4 || oAmountH >= 4)
-        {
-
-            checkV = -1;
-
-            if (xAmountH >= 4)
-            {
-
-                cout << "X Won!!!!\n";
-
-                return(true);
-
-            }
-
-            if (oAmountH >= 4)
-            {
-
-                cout << "O Won!!!!\n";
-
-                return(true);
-
-            }
-
-        }
-        else
-        {
-
             xAmountH = 0;
             oAmountH = 0;
 
 
-            for (int checkH = 7; checkH >= 0; checkH--)
+            for (int checkH = 6; checkH >= 0; checkH--)
             {
 
                 if (board[checkV][checkH] == 'X')
@@ -609,30 +581,28 @@ bool checkWin(char board[6][7])
 
                 }
 
-            }
+                if (xAmountH == 4 || oAmountH == 4)
+                {
 
-        }
+                    if (xAmountH == 4)
+                    {
 
-    }
+                        cout << "X Won!!!!\n";
 
-    if (xAmountH >= 4 || oAmountH >= 4)
-    {
+                        return(true);
 
-        if (xAmountH >= 4)
-        {
+                    }
 
-            cout << "X Won!!!!\n";
+                    if (oAmountH >= 4)
+                    {
 
-            return(true);
+                        cout << "O Won!!!!\n";
 
-        }
+                        return(true);
 
-        if (oAmountH >= 4)
-        {
+                    }
 
-            cout << "O Won!!!!\n";
-
-            return(true);
+                }
 
         }
 
@@ -640,32 +610,6 @@ bool checkWin(char board[6][7])
 
     for (int checkH = 0; checkH <= 7; checkH++)
     {
-
-        if (xAmountV >= 4 || oAmountV >= 4)
-        {
-
-            checkH = 7;
-
-            if (xAmountV >= 4)
-            {
-
-                cout << "X Won!!!!\n";
-                return(true);
-
-            }
-
-            if (oAmountV >= 4)
-            {
-
-                cout << "O Won!!!!\n";
-                return(true);
-
-            }
-
-        }
-
-        else
-        {
 
             xAmountV = 0;
             oAmountV = 0;
@@ -696,8 +640,26 @@ bool checkWin(char board[6][7])
                     oAmountV = 0;
 
                 }
+                if (xAmountV == 4 || oAmountV == 4)
+                {
 
-            }
+                    if (xAmountV == 4)
+                    {
+
+                        cout << "X Won!!!!\n";
+                        return(true);
+
+                    }
+
+                    if (oAmountV == 4)
+                    {
+
+                        cout << "O Won!!!!\n";
+                        return(true);
+
+                    }
+
+                }
 
         }
     }
