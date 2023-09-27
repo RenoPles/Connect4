@@ -465,7 +465,7 @@ int aiInput(char board[6][7])
                                 if (board[(startingRow - i) - 1][(startingCol - i) - 1] != 'X' || board[(startingRow - i) - 1][(startingCol - i) - 1] != 'O' || board[startingRow - i][(startingCol - i) - 1] != '_')
                                 {
 
-                                    startingCol += 4;
+                                    startingCol = (startingCol - i) + 4;
                                     return (startingCol);
 
                                 }
@@ -473,7 +473,7 @@ int aiInput(char board[6][7])
                                 {
 
                                     if (board[(startingRow - i) + 4][(startingCol - i) + 4] != 'X' || board[(startingRow - i) + 4][(startingCol - i) + 4] != 'O' || board[(startingRow - i) + 5][(startingCol - i) + 4] != '_')
-                                    startingCol -= 1;
+                                    startingCol = (startingCol - i) - 1;
                                     return (startingCol);
 
                                 }
