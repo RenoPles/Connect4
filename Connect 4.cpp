@@ -197,7 +197,7 @@ int aiInput(char board[6][7])
     int oAmount = 0;
     bool almostWin = false;
     bool leftSide = false;
-
+    int blankCounter = 0;
 
     for (int checkV = 5; checkV >= 0; checkV--)
     {
@@ -227,10 +227,59 @@ int aiInput(char board[6][7])
             }
             else if (board[checkV][checkH] == '_')
             {
+                blankCounter += 1;
 
-                xAmount = 0;
-                oAmount = 0;
+                if (blankCounter == 2)
+                {
+                    xAmount = 0;
+                    oAmount = 0;
+                    blankCounter = 0;
 
+                }
+                else
+                {
+                    if (xAmount == 2 || oAmount == 2)
+                    {
+
+                        if (xAmount == 2 && board[checkV][checkH + 1] == 'X')
+                        {
+                            if (checkH < 7 && checkH >= 0)
+                            {
+                                return (checkH);
+                            }
+                        }
+
+                        else if (board[checkV][checkH + 1] == 'O')
+                        {
+                            if (checkH < 7 && checkH >= 0)
+                            {
+                                return (checkH);
+                            }
+                        }
+                    }
+                    else if (xAmount == 1 || oAmount == 1)
+                    {
+
+                        if (xAmount == 1 && board[checkV][checkH + 1] == 'X' && board[checkV][checkH + 2] == 'X')
+                        {
+                            if (checkH < 7 && checkH >= 0)
+                            {
+                                return (checkH);
+                            }
+
+                        }
+
+                        else if (board[checkV][checkH + 1] == 'O' && board[checkV][checkH + 2] == 'X')
+                        {
+
+                            if (checkH < 7 && checkH >= 0)
+                            {
+                                return (checkH);
+                            } 
+                        }
+
+                    }
+                }
             }
             if (xAmount >= 3 || oAmount >= 3)
             {
@@ -244,23 +293,28 @@ int aiInput(char board[6][7])
                         if (board[checkV][checkH + 1] != 'O' && board[checkV][checkH + 1] != 'X')
                         {
                             checkH += 1;
-                            return (checkH);
-                            
+                            if (checkH < 7 && checkH >= 0)
+                            {
+                                return (checkH);
+                            }
                         }
 
-                    }
-                    else
-                    {
 
-                        if (board[checkV][checkH - 3] != 'O' && board[checkV][checkH - 3] != 'X')
+                        else
                         {
 
-                            checkH -= 3;
-                            return (checkH);
-                            
+                            if (board[checkV][checkH - 3] != 'O' && board[checkV][checkH - 3] != 'X')
+                            {
+
+                                checkH -= 3;
+                                if (checkH < 7 && checkH >= 0)
+                                {
+                                    return (checkH);
+                                }
+
+                            }
 
                         }
-
                     }
 
                 }
@@ -273,23 +327,28 @@ int aiInput(char board[6][7])
                         if (board[checkV][checkH + 1] != 'O' && board[checkV][checkH + 1] != 'X')
                         {
                             checkH += 1;
-                            return (checkH);
-                            
+                            if (checkH < 7 && checkH >= 0)
+                            {
+                                return (checkH);
+                            }
                         }
 
-                    }
-                    else
-                    {
-
-                        if (board[checkV][checkH - 3] != 'O' && board[checkV][checkH - 3] != 'X')
+                    
+                        else
                         {
 
-                            checkH -= 3;
-                            return (checkH);
-                            
+                            if (board[checkV][checkH - 3] != 'O' && board[checkV][checkH - 3] != 'X')
+                            {
 
+                           
+                                checkH -= 3;
+                                if (checkH < 7 && checkH >= 0)
+                                {
+                                     return (checkH);
+                                }
+
+                            }
                         }
-
                     }
                     
 
@@ -314,6 +373,7 @@ int aiInput(char board[6][7])
 
             for (int checkV = 5; checkV >= 0; checkV--)
             {
+                
 
                 if (board[checkV][checkH] == 'X')
                 {
@@ -348,9 +408,12 @@ int aiInput(char board[6][7])
                         {
                             if (board[checkV - 1][checkH] != 'O' && board[checkV - 1][checkH] != 'X')
                             {
-                                checkH;
-                                return (checkH);
-                                
+
+                                if (checkH < 7 && checkH >= 0)
+                                {
+                                    return (checkH);
+                                }
+
                             }
                         }
 
@@ -363,9 +426,10 @@ int aiInput(char board[6][7])
                         {
                             if (board[checkV - 1][checkH] != 'O' && board[checkV - 1][checkH] != 'X')
                             {
-                                checkH;
-                                return (checkH);
-                                
+                                if (checkH < 7 && checkH >= 0)
+                                {
+                                    return (checkH);
+                                }
                             }
                         }
 
@@ -379,7 +443,7 @@ int aiInput(char board[6][7])
     bool running = true;
     int loopTimes = 0;
     int startingRow = 5;
-    int startingCol = 2;
+    int startingCol = 4;
     int increment = 4;
     xAmount = 0;
     oAmount = 0;
@@ -389,20 +453,20 @@ int aiInput(char board[6][7])
 
         loopTimes += 1;
 
-        if (loopTimes < 3)
+        if (loopTimes <= 3)
         {
 
             increment += 1;
-            startingCol += 1;
+            startingCol -= 1;
 
         }
-        else if (loopTimes >= 3 && loopTimes <= 4)
+        else if (loopTimes == 4)
         {
 
-            increment = 6;
+            startingCol -= 1;
 
         }
-        else if (loopTimes < 6)
+        else if (loopTimes <= 6)
         {
 
             increment -= 1;
@@ -421,10 +485,7 @@ int aiInput(char board[6][7])
         for (int i = 0; i <= increment; i++)
         {
 
-            if (board[startingRow - i][startingCol - i] == 'X' || board[startingRow - i][startingCol - i] == 'O')
-            {
-
-                if (board[startingRow - i][startingCol - i] == 'X')
+                if (board[startingRow - i][startingCol + i] == 'X')
                 {
 
                     xAmount += 1;
@@ -432,75 +493,158 @@ int aiInput(char board[6][7])
 
                 }
 
-                else if (board[startingRow - i][startingCol - i] == 'O')
+                else if (board[startingRow - i][startingCol + i] == 'O')
                 {
 
                     oAmount += 1;
                     xAmount = 0;
 
                 }
-                else if (board[startingRow - i][startingCol - i] == '_')
+                else if (board[startingRow - i][startingCol + i] == '_')
                 {
 
-                    oAmount = 0;
                     xAmount = 0;
+                    oAmount = 0;
 
                 }
-            }
+          
 
             if (xAmount == 3 || oAmount == 3)
             {
 
-                if (((startingRow - i) - 1 != -1 || (startingCol - i) - 1 != -1) || (((startingRow - i) + 3)  != 5 || (startingCol - i) + 3 != 6))
-                {
-
-                    if ((board[(startingRow - i) - 1][(startingCol - i) - 1] != 'X' || board[(startingRow - i) - 1][(startingCol - i) - 1] != 'O') && (board[(startingRow - i) + 4][(startingCol - i) + 4]) != 'X' || board[(startingRow - i) + 4][(startingCol - i) + 4])
-                    {
-
-                        if (board[startingRow - i][(startingCol - i) - 1] != '_' || board[(startingRow - i) + 5][(startingCol - i) + 4] != '_')
-                        {
-
                             if (xAmount == 3)
                             {
-                                if (board[(startingRow - i) - 1][(startingCol - i) - 1] != 'X' || board[(startingRow - i) - 1][(startingCol - i) - 1] != 'O' || board[startingRow - i][(startingCol - i) - 1] != '_')
-                                {
+                                
 
-                                    startingCol = (startingCol - i) + 4;
-                                    return (startingCol);
 
-                                }
-                                else
-                                {
-
-                                    if (board[(startingRow - i) + 4][(startingCol - i) + 4] != 'X' || board[(startingRow - i) + 4][(startingCol - i) + 4] != 'O' || board[(startingRow - i) + 5][(startingCol - i) + 4] != '_')
-                                    startingCol = (startingCol - i) - 1;
-                                    return (startingCol);
-
-                                }
+                                    if (board[startingRow - i][(startingCol + i) + 1] != '_' && board[(startingRow - i) - 1][(startingCol + i) + 1] == '_')
+                                    {
+                                        startingCol = (startingCol + i) + 1;
+                                        if (startingCol < 7 && startingCol >= 0)
+                                        {
+                                            return (startingCol);
+                                        }
+                                    }
+                  
 
                             }
                             else
                             {
 
-                                if (board[(startingRow - i) - 1][(startingCol - i) - 1] != 'X' || board[(startingRow - i) - 1][(startingCol - i) - 1] != 'O' || board[startingRow - i][(startingCol - i) - 1] != '_')
+                                if (board[startingRow - i][(startingCol + i) + 1] != '_' && board[(startingRow - i) - 1][(startingCol + i) + 1] == '_')
                                 {
 
-                                    startingCol += 4;
-                                    return (startingCol);
-
-                                }
-                                else
-                                {
-
-                                    if (board[(startingRow - i) + 4][(startingCol - i) + 4] != 'X' || board[(startingRow - i) + 4][(startingCol - i) + 4] != 'O' || board[(startingRow - i) + 5][(startingCol - i) + 4] != '_')
-                                        startingCol -= 1;
-                                    return (startingCol);
+                                    startingCol = (startingCol + i) + 1;
+                                    if (startingCol < 7 && startingCol >= 0)
+                                    {
+                                        return (startingCol);
+                                    }
 
                                 }
                             }
 
-                        }                        
+                        }
 
+                    }
+        bool running = true;
+        int loopTimes = 0;
+        int startingRow = 5;
+        int startingCol = 2;
+        int increment = 4;
+
+
+        while (running)
+        {
+
+            loopTimes += 1;
+
+            if (loopTimes <= 3)
+            {
+
+                increment += 1;
+                startingCol += 1;
+
+            }
+            else if (loopTimes == 4)
+            {
+
+                startingCol += 1;
+
+            }
+            else if (loopTimes <= 6)
+            {
+
+                increment -= 1;
+                startingRow -= 1;
+
+            }
+            else
+            {
+
+                running = false;
+
+            }
+
+            xAmount = 0;
+            oAmount = 0;
+            for (int i = 0; i <= increment; i++)
+            {
+
+                    if (board[startingRow - i][startingCol - i] == 'X')
+                    {
+
+                        xAmount += 1;
+                        oAmount = 0;
+
+                    }
+
+                    else if (board[startingRow - i][startingCol - i] == 'O')
+                    {
+
+                        oAmount += 1;
+                        xAmount = 0;
+
+                    }
+                    else if (board[startingRow - i][startingCol - i] == '_')
+                    {
+
+                        oAmount = 0;
+                        xAmount = 0;
+
+                    }
+
+                if (xAmount == 3 || oAmount == 3)
+                {
+
+                    if (xAmount == 3)
+                    {
+
+
+
+                        if (board[startingRow - i][(startingCol - i) - 1] != '_' && board[(startingRow - i) - 1][(startingCol - i) - 1] == '_')
+                        {
+                            startingCol = (startingCol - i) - 1;
+                            if (startingCol < 7 && startingCol >= 0)
+                            {
+                                return (startingCol);
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+
+                        if (board[startingRow - i][(startingCol - i) - 1] != '_' && board[(startingRow - i) - 1][(startingCol - i) - 1] == '_')
+                        {
+
+                            startingCol = (startingCol - i) - 1;
+                            if (startingCol < 7 && startingCol >= 0)
+                            {
+                                return (startingCol);
+                            }
+
+                        }
                     }
 
                 }
@@ -508,6 +652,7 @@ int aiInput(char board[6][7])
             }
 
         }
+    }
         if (almostWin != true)
         {
 
@@ -516,8 +661,6 @@ int aiInput(char board[6][7])
             return(randomNumber);
 
         }
-
-    }
 
 }
 void printBoard(char board[6][7])
@@ -696,20 +839,20 @@ bool checkWin(char board[6][7])
 
         loopTimes += 1;
 
-        if (loopTimes < 3)
+        if (loopTimes <= 3)
         {
 
             increment += 1;
             startingCol += 1;
 
         }
-        else if (loopTimes >= 3 && loopTimes <= 4)
+        else if (loopTimes == 4)
         {
 
-            increment = 6;
+            startingCol += 1;
 
         }
-        else if (loopTimes < 6)
+        else if (loopTimes <= 6)
         {
 
             increment -= 1;
@@ -727,9 +870,6 @@ bool checkWin(char board[6][7])
         oAmountDL = 0;
         for (int i = 0; i <= increment; i++)
         {
-
-            if (board[startingRow - i][startingCol - i] == 'X' || board[startingRow - i][startingCol - i] == 'O')
-            {
 
                 if (board[startingRow - i][startingCol - i] == 'X')
                 {
@@ -753,7 +893,6 @@ bool checkWin(char board[6][7])
                     xAmountDL = 0;
 
                 }
-            }
 
             if (xAmountDL == 4 || oAmountDL == 4)
             {
@@ -784,7 +923,7 @@ bool checkWin(char board[6][7])
     running = true;
     loopTimes = 0;
     startingRow = 5;
-    startingCol = 2;
+    startingCol = 4;
     increment = 4;
 
     while (running)
@@ -792,21 +931,21 @@ bool checkWin(char board[6][7])
 
         loopTimes += 1;
 
-        if (loopTimes < 3)
+        if (loopTimes <= 3)
         {
 
             increment += 1;
-            startingCol += 1;
+            startingCol -= 1;
 
         }
-        else if (loopTimes >= 3 && loopTimes <= 4)
+        else if (loopTimes == 4)
         {
 
-            increment = 6;
+            startingCol -= 1;
 
 
         }
-        else if (loopTimes < 6)
+        else if (loopTimes <= 6)
         {
 
             increment -= 1;
@@ -825,8 +964,6 @@ bool checkWin(char board[6][7])
         for (int i = 0; i <= increment; i++)
         {
 
-            if (board[startingRow - i][startingCol + i] == 'X' || board[startingRow - i][startingCol + i] == 'O')
-            {
 
                 if (board[startingRow - i][startingCol + i] == 'X')
                 {
@@ -836,21 +973,20 @@ bool checkWin(char board[6][7])
 
                 }
 
-                else if (board[startingRow - i][startingCol - i] == 'O')
+                else if (board[startingRow - i][startingCol + i] == 'O')
                 {
 
                     oAmountDR += 1;
                     xAmountDR = 0;
 
                 }
-                else if (board[startingRow - i][startingCol - i] == '_')
+                else if (board[startingRow - i][startingCol + i] == '_')
                 {
 
                     oAmountDR = 0;
                     xAmountDR = 0;
 
                 }
-            }
 
             if (xAmountDR == 4 || oAmountDR == 4)
             {
